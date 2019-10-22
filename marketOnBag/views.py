@@ -65,3 +65,114 @@ def cadastrar(request):
         return render(request, 'cadastrar-usuario.html', args)
 
     return render(request, 'cadastrar-usuario.html')
+
+def listar_mercados(request):
+
+    usuario_email = Usuario.objects.filter(id=request.session['member_id']).first()
+    usuario = Pessoa.objects.get(usuario=usuario_email)
+    
+    listar_mercados = Mercado.objects.filter(ativo=True,endereco_cidade=usuario.endereco_cidade).all()
+
+    args = None
+    if listar_mercados.first() is None:
+        args = {
+            'msg': 'Não existe nenhum mercado cadastrado',
+            'usuario': usuario.nome
+        }
+    else:
+        args = {
+            'listar_mercados': listar_mercados,
+            'usuario': usuario.nome,
+            'regiao_usuario': usuario.endereco_cidade
+        }
+
+    return render(request, 'mercados.html', args)
+
+def listar_produtos(request, id):
+    usuario_email = Usuario.objects.filter(id=request.session['member_id']).first()
+    usuario = Pessoa.objects.get(usuario=usuario_email)
+    mercado = Mercado.objects.get(id=id)
+
+    listar_produtos = Produto.objects.filter(mercado=mercado.id).all()
+
+    args = None
+    if listar_produtos.first() is None:
+        args = {
+            'msg': 'Não existe nenhum produto cadastrado',
+            'mercado': mercado.nome_fantasia,
+            'mercado_id': mercado.id,
+            'usuario': usuario.nome
+        }
+    else:
+        args = {
+            'listar_produtos': listar_produtos,
+            'mercado': mercado.nome_fantasia,
+            'mercado_id': mercado.id,
+            'usuario': usuario.nome,
+            'usuario_id': usuario.id
+        }
+
+    return render(request, 'produtos.html', args)
+
+def carrinho(request, id):
+
+    usuario_email = Usuario.objects.filter(id=request.session['member_id']).first()
+    usuario = Pessoa.objects.get(usuario=usuario_email)
+    mercado = Mercado.objects.get(id=id)
+
+    carrinho = Carrinho.objects.filter(pessoa=usuario.id, mercado=mercado.id).all()
+
+    valor_total_produtos = 0
+    quantidade_total_produtos = 0
+
+    for item in carrinho:
+        valor_total_produtos += item.valor
+        quantidade_total_produtos += item.quantidade
+
+    args = None
+    if carrinho.first() is None:
+        args = {
+            'msg': 'Nenhum produto no carrinho',
+            'mercado': mercado.nome_fantasia,
+            'usuario': usuario.nome
+        }
+    else:
+        args = {
+            'carrinho': carrinho,
+            'usuario': usuario.nome,
+            'mercado': mercado.nome_fantasia,
+            'valor_total': valor_total_produtos,
+            'quantidade_total': quantidade_total_produtos
+        }
+
+    return render(request, 'carrinho.html', args)
+
+def adicionar_produto_carrinho(request):
+    if request.method == 'POST':
+            
+        produto = Produto.objects.get(id=request.POST['produto-id'])
+
+        caminho = request.POST['caminho']
+
+        data_carrinho = Carrinho()
+        data_carrinho.quantidade = request.POST['quantidade-produto']
+        data_carrinho.valor = float(request.POST['quantidade-produto']) * float(produto.valor)
+        data_carrinho.mercado = Mercado.objects.get(ativo=True, id=request.POST['mercado-id'])  
+        data_carrinho.produto = Produto.objects.get(id=request.POST['produto-id'])
+        data_carrinho.pessoa = Pessoa.objects.get(id=request.POST['usuario-id'])
+        data_carrinho.save()
+
+        args = {
+            'msg': 'Produto adicionado no carrinho'
+        }
+    
+    return redirect('/mercados/lista/'+str(request.POST['mercado-id'])+'/carrinho')
+
+def delete_produto_carrinho(request, id):
+    item = Carrinho.objects.filter(id=id).first()
+    carrinho = Carrinho.objects.get(id=id)
+
+    if item is not None:
+        item.delete()
+    return redirect('/mercados/lista/'+str(carrinho.mercado.id)+'/carrinho')
+
