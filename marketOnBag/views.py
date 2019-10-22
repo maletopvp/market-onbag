@@ -152,8 +152,6 @@ def adicionar_produto_carrinho(request):
             
         produto = Produto.objects.get(id=request.POST['produto-id'])
 
-        caminho = request.POST['caminho']
-
         data_carrinho = Carrinho()
         data_carrinho.quantidade = request.POST['quantidade-produto']
         data_carrinho.valor = float(request.POST['quantidade-produto']) * float(produto.valor)
