@@ -1,0 +1,13 @@
+body {
+  background-color: #293377
+}
+
+.card h4 {
+  color: #293377;
+}
+
+.center-card-login {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+}

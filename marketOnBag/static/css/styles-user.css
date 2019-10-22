@@ -1,0 +1,55 @@
+#lista-mercados a {
+  color: #293377;
+}
+
+#lista-mercados a:hover {
+  text-decoration: none;
+}
+
+#lista-mercados .card {
+  border: 1px solid white;
+  overflow: hidden;
+  transition: all .4s;
+}
+
+#lista-mercados .card .card-title span.regiao,
+#lista-mercados .card .card-title span.produto {
+  font-size: 10pt;
+}
+
+#lista-mercados .card:hover {
+  border: 1px solid #66cc33 !important;
+}
+
+.input-group input,
+.input-group-text {
+  background-color: rgba(225, 225, 225, 0.2) !important;
+  border: 0;
+}
+
+.user-img .material-icons {
+  background-color: #f5f5f5;
+  border: 7px solid #eaeaea;
+  border-radius: 50%;
+  color: #293377;
+  font-size: 160px;
+  padding: 20px;
+}
+
+nav {
+  background-color: #293377;
+  border-bottom: 2px solid #66cc33;
+}
+
+nav a {
+  color: rgba(255, 255, 255, 0.5);
+  transition: color .4s;
+}
+
+nav .navbar-toggler-icon {
+  color: white;
+}
+
+nav a:hover {
+  color: white;
+}
