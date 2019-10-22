@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
+import django_heroku
 
 import os
 
@@ -25,7 +26,7 @@ SECRET_KEY = 'ah+g**c1=vyz3k#_ii39(qbh@_&p-k&p$zt10j(c4x$njxt1li'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'meuappnaheroku.herokuapp.com']
 
 
 # Application definition
@@ -122,3 +123,6 @@ STATIC_URL = '/static/'
 STATIC_URL = '/static/css/'
 STATIC_URL = '/static/js/'
 STATIC_URL = '/static/img/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+django_heroku.settings(locals())
