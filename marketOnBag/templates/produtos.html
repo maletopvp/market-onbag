@@ -1,0 +1,80 @@
+{% extends "base-usuario.html" %}
+{% load staticfiles %}
+{% block content %}
+<section id="busca" class="container">
+    <h3 class="text-center mb-5">Produtos do Mercado: {{mercado}}</h3>
+    <form method="GET" action="">
+        <div class="form-row">
+            <div class="col-md-10">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="icone-busca">
+                            <i class="material-icons">search</i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Produtos" aria-describedby="icone-busca">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100 mb-3">Buscar</button>
+            </div>
+        </div>
+    </form>
+</section>
+
+<section id="lista-mercados" class="container">
+    <div class="row">
+        {% if msg is not None %}
+        <div class="col text-center">
+            <p><strong>{{msg}}</strong></p>
+            <a href="/mercados/lista/" class="btn btn-primary">Voltar para Mercados</a>
+        </div>
+        {% endif %}
+        {% for item in listar_produtos %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-light mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{item.nome}} - <span class="produto">{{item.tipo}}</span></h5>
+                        <p class="card-text text-muted">{{item.desc}}</p>
+                        <p class="card-text text-muted">Valor do Produto: R$ {{item.valor}}</p>
+                        {% if item.quantidade > 0 %}
+                        <form method="POST" action="/carrinho/adicionar/produto">
+                            {% csrf_token %}
+                            <input type="text" name="mercado-id" value="{{mercado_id}}" hidden>
+                            <input type="text" name="produto-id" value="{{item.id}}" hidden>
+                            <input type="text" name="usuario-id" value="{{usuario_id}}" hidden>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="quantidade-produto">Escolha a quantidade:</label>
+                                    <select class="form-control" name="quantidade-produto" id="quantidade-produto">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-outline-primary">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                        </form>
+                        {% else %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Produto Indisponível
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
