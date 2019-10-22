@@ -1,0 +1,43 @@
+{% extends "base-login.html" %}
+{% load staticfiles %}
+{% block content %}
+<section id="login">
+    <div class="container">
+        <div class="row justify-content-center center-card-login">
+            <div class="card py-5 mx-4" style="width: 25rem;">
+                <div class="row justify-content-center">
+                    <img src="{% static 'img/logo.svg' %}" alt="logo Market OnBag">
+                </div>
+                <div class="row px-4">
+                    <div class="card-body">
+                        <h4 class="text-center pb-3">Acesse sua conta</h4>
+                        {% if msg is not None %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{msg}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                        <form method="POST" action="/">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="d-none" for="email">E-mail</label>
+                                <input type="email" class="form-control" name="email" id="email"
+                                    placeholder="Digite seu e-mail" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="d-none" for="password">Senha</label>
+                                <input type="password" class="form-control" name="senha" id="password"
+                                    placeholder="Digite a sua senha" required>
+                            </div>
+                            <button type="submit" class="btn w-100 btn-primary mb-3">ENVIAR</button>
+                            <span class="text-muted">Ainda não tem conta? <a href="/usuario/cadastro">Cadastre-se agora</a></span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

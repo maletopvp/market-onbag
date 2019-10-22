@@ -1,0 +1,108 @@
+{% extends "base-login.html" %}
+{% load staticfiles %}
+{% block content %}
+<section id="login">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="card py-5 mx-4" style="width: 35rem;">
+                <div class="row px-4">
+                    <div class="card-body">
+                        <h4 class="text-center pb-3">Registre sua conta</h4>
+                        <p class="text-muted">Realize o seu cadastro para fazer compras com nossa rede de supermercados
+                        </p>
+                        {% if msg is not None %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{msg}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+                        {% if error is not None %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{error}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+                        <form method="POST" action="/usuario/cadastro">
+                            {% csrf_token %}
+                            <h6>Dados Pessoais</h6>
+                            <input type="text" class="form-control" id="tipo_usuario" name="tipo_usuario" value="cliente" hidden>
+                            <div class="form-row">
+                                <div class="form-group col-md-7">
+                                    <label class="d-none" for="nome">Nome Completo</label>
+                                    <input type="text" class="form-control" id="nome" name="nome"
+                                        placeholder="Digite seu Nome Completo" required>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label class="d-none" for="dtnascimento">Data de nascimento</label>
+                                    <input type="date" class="form-control" id="dtnascimento" name="dtnascimento" required>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="d-none" for="email">E-mail</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="Digite seu E-mail" required>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="d-none" for="password">Senha</label>
+                                    <input type="password" class="form-control" id="password" name="senha"
+                                        placeholder="Digite a sua senha" required>
+                                </div>
+                            </div>
+                            <hr>
+                            <h6>Endereço</h6>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="d-none" for="cep">CEP</label>
+                                    <input type="text" class="form-control" id="cep" name="cep"
+                                        placeholder="Digite seu CEP" required>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label class="d-none" for="estado">Estado</label>
+                                    <input type="text" class="form-control" id="estado" placeholder="Estado" name="uf" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="d-none" for="bairro">Bairro</label>
+                                    <input type="text" class="form-control" id="bairro" placeholder="Bairro"
+                                        name="bairro" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <label class="d-none" for="cidade">Cidade</label>
+                                    <input type="text" class="form-control" id="cidade" placeholder="Cidade"
+                                        name="cidade">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="d-none" for="numero">Numero</label>
+                                    <input type="number" class="form-control" id="numero" placeholder="numero" name="numero" required>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="d-none" for="endereco">Endereço</label>
+                                    <input type="text" class="form-control" id="endereco" placeholder="Endereço"
+                                        name="endereco" required>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="d-none" for="complemento">Complemento</label>
+                                    <textarea class="form-control" name="complemento" id="complemento"
+                                        name="complemento" cols="30" rows="3" placeholder="Complemento" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 my-2">
+                                    <a href="/" class="btn w-100 btn-success">Voltar</a>
+                                </div>
+                                <div class="col-md-6 my-2">
+                                    <button type="submit" class="btn w-100 btn-primary">Registrar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
