@@ -13,3 +13,5 @@ myenv
 vscode
 .vscode
 
+db.sqlite3
+
