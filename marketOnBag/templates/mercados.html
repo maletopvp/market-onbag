@@ -1,0 +1,45 @@
+{% extends "base-usuario.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<section id="busca" class="container">
+    <form method="GET" action="">
+        <div class="form-row">
+            <div class="col-md-10">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="icone-busca">
+                            <i class="material-icons">search</i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Mercados" aria-describedby="icone-busca">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100 mb-3">Buscar</button>
+            </div>
+        </div>
+    </form>
+</section>
+<section id="lista-mercados" class="container">
+    <div class="row">
+        {% if msg is not None %}
+        <div class="col text-center">
+            <p><strong>{{msg}}</strong></p>
+        </div>
+        {% endif %}
+        {% for item in listar_mercados %}
+            <div class="col-md-6 col-lg-4">
+                <a href="/mercados/lista/{{item.id}}/produtos">
+                    <div class="card border-light mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.nome_fantasia}} <span class="regiao">{{item.endereco_cidade}} </span></h5>
+                            <p class="card-text text-muted">R$ 5,00 (Taxa de entrega)</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
