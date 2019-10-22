@@ -21,4 +21,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.login),
     path('usuario/cadastro', views.cadastrar),
+    path('mercados/lista/', views.listar_mercados),
+    path('mercados/lista/<int:id>/produtos', views.listar_produtos),
+    path('carrinho/adicionar/produto', views.adicionar_produto_carrinho),
+    path('mercados/lista/<int:id>/carrinho', views.carrinho),
+    path('carrinho/deletar/produto/<int:id>', views.delete_produto_carrinho),
 ]
