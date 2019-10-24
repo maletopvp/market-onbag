@@ -24,8 +24,6 @@ def login(request):
                 'msg': 'Credenciais inválidas'
             }
             return render(request, 'login.html', args)
-
-
     return render(request, 'login.html')
 
 def cadastrar(request):
@@ -33,7 +31,6 @@ def cadastrar(request):
         usuario = Usuario.objects.filter(email = request.POST['email']).first()
 
         if usuario is None:
-
             data_usuario = Usuario()
             data_usuario.email = request.POST['email']
             data_usuario.tipo_usuario = request.POST['tipo_usuario']
@@ -56,14 +53,11 @@ def cadastrar(request):
             args = {
                 'msg': 'Usuário Cadastrado com sucesso!!'
             }
-
         else:
             args = {
                 'error': 'Esse usuário já existe'
             }
-
         return render(request, 'cadastrar-usuario.html', args)
-
     return render(request, 'cadastrar-usuario.html')
 
 def listar_mercados(request):
