@@ -44,11 +44,16 @@
             <th scope="col">#</th>
             <th scope="col">Produto</th>
             <th scope="col">{{quantidade_total}}</th>
-            <th scope="col">{{valor_total}}</th>
+            <th scope="col">R$ {{valor_total}}</th>
             <th scope="col"><button class="btn btn-sm btn-primary">Comprar</button></th>
           </tr>
         </tfooter>
       </table>
+      {% if taxa_entrega > 0 %}
+      <h6>Taxa de entrega incluída na conta: R$ {{taxa_entrega}}</h6>
+      {% else %}
+      <h6>Taxa de entrega grátis</h6>
+      {% endif %}
     {% endif %}
     </div>
   </section>
