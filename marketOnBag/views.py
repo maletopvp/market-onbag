@@ -19,21 +19,29 @@ def login(request):
         email = request.POST['email']
         senha = request.POST['senha']
 
-        m = Usuario.objects.get(email=email)
-        if m.tipo_usuario == "cliente":
-            if m.senha == senha:
-                request.session['member_id'] = m.id
-                return redirect('/mercados/lista/')
+        user_exists = Usuario.objects.filter(email = email, senha = senha).first()
+
+        if user_exists is not None:
+            m = Usuario.objects.get(email=email)
+            if m.tipo_usuario == "cliente":
+                if m.senha == senha:
+                    request.session['member_id'] = m.id
+                    return redirect('/mercados/lista/')
+                else:
+                    args = {
+                        'msg': 'Credenciais inválidas'
+                    }
+                    return render(request, 'login.html', args)
             else:
                 args = {
-                    'msg': 'Credenciais inválidas'
+                    'msg': 'Usuário Inválido'
                 }
                 return render(request, 'login.html', args)
-        else:
+        else: 
             args = {
-                'msg': 'Credenciais inválidas'
+                'msg': 'Usuário não cadastrado'
             }
-            return render(request, 'login.html', args)
+        return render(request, 'login.html', args)
     return render(request, 'login.html')
 
 def cadastrar(request):
@@ -89,7 +97,7 @@ def listar_mercados(request):
     args = None
     if listar_mercados.first() is None:
         args = {
-            'msg': 'Não existe nenhum mercado cadastrado',
+            'msg': 'Não existe nenhum mercado cadastrado na sua região',
             'usuario': usuario.nome
         }
     else:
@@ -111,7 +119,7 @@ def listar_produtos(request, id):
     args = None
     if listar_produtos.first() is None:
         args = {
-            'msg': 'Não existe nenhum produto cadastrado',
+            'msg': 'Este mercado ainda não cadastrou nenhum produto',
             'mercado': mercado.nome_fantasia,
             'mercado_id': mercado.id,
             'usuario': usuario.nome
@@ -147,6 +155,7 @@ def carrinho(request, id):
         args = {
             'msg': 'Nenhum produto no carrinho',
             'mercado': mercado.nome_fantasia,
+            'mercado_id': mercado.id,
             'usuario': usuario.nome
         }
     else:
@@ -155,6 +164,7 @@ def carrinho(request, id):
             'usuario': usuario.nome,
             'mercado': mercado.nome_fantasia,
             'valor_total': valor_total_produtos,
+            'mercado_id': mercado.id,
             'quantidade_total': quantidade_total_produtos,
             'taxa_entrega': mercado.taxa_entrega
         }
