@@ -135,7 +135,7 @@ def carrinho(request, id):
 
     carrinho = Carrinho.objects.filter(pessoa=usuario.id, mercado=mercado.id).all()
 
-    valor_total_produtos = 0
+    valor_total_produtos = mercado.taxa_entrega
     quantidade_total_produtos = 0
 
     for item in carrinho:
@@ -155,7 +155,8 @@ def carrinho(request, id):
             'usuario': usuario.nome,
             'mercado': mercado.nome_fantasia,
             'valor_total': valor_total_produtos,
-            'quantidade_total': quantidade_total_produtos
+            'quantidade_total': quantidade_total_produtos,
+            'taxa_entrega': mercado.taxa_entrega
         }
 
     return render(request, 'carrinho.html', args)
