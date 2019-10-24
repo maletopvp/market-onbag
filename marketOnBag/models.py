@@ -97,6 +97,9 @@ class Mercado(models.Model):
     endereco_complemento = models.CharField(
         max_length=1000, blank=True, null=True, verbose_name=u"Complemento"
     )
+    taxa_entrega = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, verbose_name=u"Taxa de entrega", default=0.00
+    )
     criado_em = models.DateTimeField(default=timezone.now)
     ativo = models.BooleanField(default=True)
 
