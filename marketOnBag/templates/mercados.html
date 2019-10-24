@@ -35,7 +35,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{item.nome_fantasia}} <span class="regiao">{{item.endereco_cidade}} </span></h5>
                             {% if item.taxa_entrega > 0 %}
-                            <p class="card-text text-muted">R$ {{item.taxa_entrega}} (Taxa de entrega)</p>
+                            <p class="card-text text-muted">R$ <strong>{{item.taxa_entrega}}</strong> (Taxa de entrega)</p>
                             {% else %}
                             <p class="card-text text-muted">Taxa de entrega <strong>GRÁTIS</strong></p>
                             {% endif %}

@@ -34,9 +34,13 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card border-light mb-3 shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">{{item.nome}} - <span class="produto">{{item.tipo}}</span></h5>
+                        <h5 class="card-title">{{item.nome}} <br> <span class="produto">{{item.tipo}}</span></h5>
+                        {% if item.desc is not None %}
                         <p class="card-text text-muted">{{item.desc}}</p>
-                        <p class="card-text text-muted">Valor do Produto: R$ {{item.valor}}</p>
+                        {% else %}
+                        <p class="card-text text-muted">Nenhuma descrição</p>
+                        {% endif %}
+                        <p class="card-text text-muted">Valor do Produto: <strong>R$ {{item.valor}}</strong></p>
                         {% if item.quantidade > 0 %}
                         <form method="POST" action="/carrinho/adicionar/produto">
                             {% csrf_token %}

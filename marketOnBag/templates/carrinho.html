@@ -3,16 +3,16 @@
 {% block content %}
 
   <section id="meus-pedidos" class="container px-4">
-    <div class="row justify-content-center">
+    <div class="text-center">
       <h6>Mercado <strong>{{mercado}}</strong></h6>
     </div>
-    <div class="row justify-content-center mb-4">
-      <h4>Carrinho de compras: <br> {{usuario}}</h4>
+    <div class="text-center mb-5">
+      <h4>Carrinho de compras: <br> <strong>{{usuario}}</strong></h4>
     </div>
     <div class="row mb-5">
     {% if msg is not None %}
         <div class="col text-center">
-            <p><strong>{{msg}}</strong></p>
+            <p class="mb-5"><strong>{{msg}}</strong></p>
             <a href="/mercados/lista/{{mercado_id}}/produtos" class="btn btn-primary">Voltar para Produtos</a>
         </div>
     {% endif %}
