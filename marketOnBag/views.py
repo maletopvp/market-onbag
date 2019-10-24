@@ -1,8 +1,18 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from marketOnBag.models import *
+from datetime import date, datetime
 
 # Create your views here.
+
+def diffDate(data):
+    data_atual = date.today()
+
+    data_atual = data_atual.toordinal() #Convertendo em dias
+    data = data.toordinal() #Convertendo em dias
+    dias = data_atual - data #Diferenca em dias
+    anos, dias = dias // 365, dias % 365
+    return anos
 
 def login(request):
     if request.method == "POST":
@@ -31,35 +41,44 @@ def cadastrar(request):
         usuario = Usuario.objects.filter(email = request.POST['email']).first()
 
         if usuario is None:
-            data_usuario = Usuario()
-            data_usuario.email = request.POST['email']
-            data_usuario.tipo_usuario = request.POST['tipo_usuario']
-            data_usuario.senha = request.POST['senha']
-            data_usuario.save()
+            str_date = request.POST['dtnascimento']
+            data_nasc = datetime.strptime(str_date, '%Y-%m-%d').date()
+            idade = diffDate(data_nasc)
 
-            data_pessoa = Pessoa()
-            data_pessoa.nome = request.POST['nome']
-            data_pessoa.dt_nascimento = request.POST['dtnascimento']
-            data_pessoa.usuario = data_usuario
-            data_pessoa.endereco_cep = request.POST['cep']
-            data_pessoa.endereco_sigla_estado = request.POST['uf']
-            data_pessoa.endereco_cidade = request.POST['cidade']
-            data_pessoa.endereco_bairro = request.POST['bairro']
-            data_pessoa.endereco_rua = request.POST['endereco']
-            data_pessoa.endereco_numero = request.POST['numero']
-            data_pessoa.endereco_complemento = request.POST['complemento']
-            data_pessoa.save()
+            if idade >= 18:
+                data_usuario = Usuario()
+                data_usuario.email = request.POST['email']
+                data_usuario.tipo_usuario = request.POST['tipo_usuario']
+                data_usuario.senha = request.POST['senha']
+                data_usuario.save()
 
-            args = {
-                'msg': 'Usuário Cadastrado com sucesso!!'
-            }
+                data_pessoa = Pessoa()
+                data_pessoa.nome = request.POST['nome']
+                data_pessoa.dt_nascimento = request.POST['dtnascimento']
+                data_pessoa.usuario = data_usuario
+                data_pessoa.endereco_cep = request.POST['cep']
+                data_pessoa.endereco_sigla_estado = request.POST['uf']
+                data_pessoa.endereco_cidade = request.POST['cidade']
+                data_pessoa.endereco_bairro = request.POST['bairro']
+                data_pessoa.endereco_rua = request.POST['endereco']
+                data_pessoa.endereco_numero = request.POST['numero']
+                data_pessoa.endereco_complemento = request.POST['complemento']
+                data_pessoa.save()
+
+                args = {
+                    'msg': 'Usuário Cadastrado com sucesso!!'
+                }
+            else: 
+                args = {
+                    'error': 'Você deve tem que ter pelo menos 18 anos!!'
+                }
+            return render(request, 'cadastrar-usuario.html', args)
         else:
             args = {
                 'error': 'Esse usuário já existe'
             }
         return render(request, 'cadastrar-usuario.html', args)
     return render(request, 'cadastrar-usuario.html')
-
 def listar_mercados(request):
 
     usuario_email = Usuario.objects.filter(id=request.session['member_id']).first()
