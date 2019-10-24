@@ -1,55 +1,125 @@
+.bolas>div {
+    display: inline-block;
+    background-color: #293377;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    margin: 3px;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    animation-name: animarBola;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+}
+
+.bolas>div:nth-child(1) {
+    animation-duration: 0.75s;
+    animation-delay: 0;
+}
+
+.bolas>div:nth-child(2) {
+    animation-duration: 0.75s;
+    animation-delay: 0.12s;
+}
+
+.bolas>div:nth-child(3) {
+    animation-duration: 0.75s;
+    animation-delay: 0.24s;
+}
+
 #lista-mercados a {
-  color: #293377;
+    color: #293377;
 }
 
 #lista-mercados a:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 #lista-mercados .card {
-  border: 1px solid white;
-  overflow: hidden;
-  transition: all .4s;
+    border: 1px solid white;
+    overflow: hidden;
+    transition: all .4s;
 }
 
 #lista-mercados .card .card-title span.regiao,
 #lista-mercados .card .card-title span.produto {
-  font-size: 10pt;
+    font-size: 10pt;
 }
 
 #lista-mercados .card:hover {
-  border: 1px solid #66cc33 !important;
+    border: 1px solid #66cc33 !important;
 }
 
 .input-group input,
 .input-group-text {
-  background-color: rgba(225, 225, 225, 0.2) !important;
-  border: 0;
-}
-
-.user-img .material-icons {
-  background-color: #f5f5f5;
-  border: 7px solid #eaeaea;
-  border-radius: 50%;
-  color: #293377;
-  font-size: 160px;
-  padding: 20px;
+    background-color: rgba(225, 225, 225, 0.2) !important;
+    border: 0;
 }
 
 nav {
-  background-color: #293377;
-  border-bottom: 2px solid #66cc33;
+    background-color: #293377;
+    border-bottom: 2px solid #66cc33;
 }
 
 nav a {
-  color: rgba(255, 255, 255, 0.5);
-  transition: color .4s;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color .4s;
 }
 
 nav .navbar-toggler-icon {
-  color: white;
+    color: white;
 }
 
 nav a:hover {
-  color: white;
+    color: white;
+}
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    /* cor do background que vai ocupar o body */
+    z-index: 999;
+    /* z-index para jogar para frente e sobrepor tudo */
+}
+
+#preloader .inner {
+    position: absolute;
+    top: 50%;
+    /* centralizar a parte interna do preload (onde fica a animação)*/
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.user-img .material-icons {
+    background-color: #f5f5f5;
+    border: 7px solid #eaeaea;
+    border-radius: 50%;
+    color: #293377;
+    font-size: 160px;
+    padding: 20px;
+}
+
+@keyframes animarBola {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    16% {
+        -webkit-transform: scale(0.1);
+        transform: scale(0.1);
+        opacity: 0.7;
+    }
+
+    33% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+    }
 }
